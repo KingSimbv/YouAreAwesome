@@ -8,17 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var message = "I am a programmer"
+    @State private var message = ""
     @State private var imageString = ""
+    @State private var imageNumber = 0
+    @State private var messageNumber = 0
     var body: some View {
         VStack {
             Spacer()
             
-            Image(systemName: imageString)
+            Image(imageString)
                 .resizable()
                 .scaledToFit()
-                .foregroundStyle(.orange)
-                .frame(height: 30)
+                .frame(width: 300, height: 300)
+                .clipShape(RoundedRectangle(cornerRadius: 50))
+                .shadow(radius: 30)
+               
             Text(message)
                 .font(.largeTitle)
                 .fontWeight(.ultraLight)
@@ -28,21 +32,24 @@ struct ContentView: View {
             
             Button("click me!")
             {
-                if message == "You are awesome"
-                {
-                    message = "You are Great!"
-                    imageString = "hand.thumbsup"
-                }
-                else if message == "You are Great!"
-                {
-                    message = "You are awesome"
+              let messages = ["You are outstanding!", "You are amazing!", "You are royalty"]
+             
+              
+                imageNumber = (imageNumber >= 3 ? 0 : imageNumber)
+                imageNumber += 1
+                print(imageNumber)
+                imageString = "PlaygroundImage" + String(imageNumber * 2)
+                message = messages[messageNumber]
+                messageNumber += 1
+                messageNumber = (messageNumber > 2 ? 0 : messageNumber)
+               
+                
+                
+                
+                
+               
                     
-                    imageString = "wand.and.stars"
-                }
-                else{
-                    message = "You are Great!"
-                    
-                }
+                
             }
             .buttonStyle(.borderedProminent)
             .tint(.orange)
