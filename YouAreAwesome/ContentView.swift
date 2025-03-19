@@ -9,14 +9,16 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var message = ""
-    @State private var imageString = ""
-    @State private var imageNumber = 0
-    @State private var messageNumber = 0
+    @State private var imageName = ""
+    @State private var numberOfImages = 7
+    @State private var LastImageNumber = -1
+    @State private var LastMessageNumber = -1
+    
     var body: some View {
         VStack {
             Spacer()
             
-            Image(imageString)
+            Image(imageName)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 300, height: 300)
@@ -32,16 +34,19 @@ struct ContentView: View {
             
             Button("click me!")
             {
-              let messages = ["You are outstanding!", "You are amazing!", "You are royalty"]
+              let messages =
+                [
+                "You are outstanding!",
+                "You are AMAZING!",
+                "You are ROYALTY!",
+                "you are SUPER",
+                "You are a GENIUS!"
+              ]
              
-              
-                imageNumber = (imageNumber >= 3 ? 0 : imageNumber)
-                imageNumber += 1
-                print(imageNumber)
-                imageString = "PlaygroundImage" + String(imageNumber * 2)
-                message = messages[messageNumber]
-                messageNumber += 1
-                messageNumber = (messageNumber > 2 ? 0 : messageNumber)
+             message = messages[Int.random(in: 0...messages.count-1)]
+            
+            imageName = "PlaygroundImage\(Int.random(in: 1...numberOfImages))"
+               
                
                 
                 
