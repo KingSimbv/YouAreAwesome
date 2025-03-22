@@ -42,19 +42,28 @@ struct ContentView: View {
                 "you are SUPER",
                 "You are a GENIUS!"
               ]
-             
-             message = messages[Int.random(in: 0...messages.count-1)]
+                
+                var messageNumber = Int.random(in: 0...messages.count-1)
+                
+                while messageNumber == LastMessageNumber {
+                    messageNumber = Int.random(in: 0...messages.count-1)
+                }
+                
+                message = messages[messageNumber]
+                
+                
+                var imageNumber = Int.random(in: 1...numberOfImages)
+                
+                while imageNumber == LastImageNumber {
+                    imageNumber = Int.random(in: 1...numberOfImages)
+                }
+                
+                imageName = "PlaygroundImage\(imageNumber)"
+                
+                LastMessageNumber = messageNumber
+                
+                LastImageNumber = imageNumber
             
-            imageName = "PlaygroundImage\(Int.random(in: 1...numberOfImages))"
-               
-               
-                
-                
-                
-                
-               
-                    
-                
             }
             .buttonStyle(.borderedProminent)
             .tint(.orange)
