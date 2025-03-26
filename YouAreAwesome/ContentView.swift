@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVFAudio
 
 struct ContentView: View {
     @State private var message = ""
@@ -13,6 +14,9 @@ struct ContentView: View {
     @State private var numberOfImages = 7
     @State private var LastImageNumber = -1
     @State private var LastMessageNumber = -1
+    @State private var numberOfSounds = 5
+    @State private var lastSoundNumber = -1
+    @State private var audioPlayer: AVAudioPlayer!
     
     var body: some View {
         VStack {
@@ -36,7 +40,7 @@ struct ContentView: View {
             {
               let messages =
                 [
-                "You are outstanding!",
+                "You are OUTSTANDING!",
                 "You are AMAZING!",
                 "You are ROYALTY!",
                 "you are SUPER",
@@ -64,6 +68,26 @@ struct ContentView: View {
                 
                 LastImageNumber = imageNumber
             
+                var soundNumber = Int.random(in: 1...5)
+                while soundNumber == lastSoundNumber {
+                    soundNumber = Int.random(in: 1...5)
+                }
+                
+                lastSoundNumber = soundNumber
+                
+                let soundName = "sound\(soundNumber)"
+                
+                guard let soundFile = NSDataAsset(name: soundName) else {
+                    print("Could not find \(soundName)")
+                    return
+                }
+                do {
+                    audioPlayer = try AVAudioPlayer(data: soundFile.data)
+                    audioPlayer.play()
+                } catch {
+                    print("ERROR: \(error.localizedDescription) creatin audio player")
+                    return
+                }
             }
             .buttonStyle(.borderedProminent)
             .tint(.orange)
