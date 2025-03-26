@@ -29,6 +29,7 @@ struct ContentView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 50))
                 .shadow(radius: 30)
                
+               
             Text(message)
                 .font(.largeTitle)
                 .fontWeight(.ultraLight)
@@ -68,30 +69,35 @@ struct ContentView: View {
                 
                 LastImageNumber = imageNumber
             
-                var soundNumber = Int.random(in: 1...5)
+                var soundNumber = Int.random(in: 1...numberOfSounds)
                 while soundNumber == lastSoundNumber {
-                    soundNumber = Int.random(in: 1...5)
+                    soundNumber = Int.random(in: 1...numberOfSounds)
                 }
                 
                 lastSoundNumber = soundNumber
                 
                 let soundName = "sound\(soundNumber)"
                 
-                guard let soundFile = NSDataAsset(name: soundName) else {
-                    print("Could not find \(soundName)")
-                    return
-                }
-                do {
-                    audioPlayer = try AVAudioPlayer(data: soundFile.data)
-                    audioPlayer.play()
-                } catch {
-                    print("ERROR: \(error.localizedDescription) creatin audio player")
-                    return
-                }
+                Playsound(soundName: soundName)
+                
             }
             .buttonStyle(.borderedProminent)
             .tint(.orange)
             .padding()
+        }
+    }
+    
+    func Playsound(soundName: String) {
+        guard let soundFile = NSDataAsset(name: soundName) else {
+            print("Could not find \(soundName)")
+            return
+        }
+        do {
+            audioPlayer = try AVAudioPlayer(data: soundFile.data)
+            audioPlayer.play()
+            audioPlayer.currentTime = 0
+        }catch{
+            print("ERROR: \(error.localizedDescription) cannot create audio player")
         }
     }
 }
